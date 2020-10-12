@@ -3,7 +3,12 @@
 	"i18n": {
 		"en-US": {
 			"label": "Parking Lot",
-			"description": "View and retrieve parked calls."
+			"description": "View and retrieve parked calls.",
+			"features": [
+				"View Parked Calls",
+				"Retrieve Parked Calls",
+				"Call Device Which Parked a Call"
+			]
 		}
 	},
 	"tags": [
@@ -15,6 +20,9 @@
 	"version": "1.0",
 	"license": "-",
 	"price": 0,
+	"screenshots": [
+		"Parkinglot.png"
+	],
 	"urls": {
 		"documentation": "{documentation_url}",
 		"howto": "{howto_video_url}"
