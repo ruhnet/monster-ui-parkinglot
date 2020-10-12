@@ -1,0 +1,23 @@
+{
+	"name": "parkinglot",
+	"i18n": {
+		"en-US": {
+			"label": "Parking Lot",
+			"description": "View and retrieve parked calls."
+		}
+	},
+	"tags": [
+		"developer"
+	],
+	"icon": "Parkinglot_app.png",
+	"api_url": "",
+	"author": "RuhNet",
+	"version": "1.0",
+	"license": "-",
+	"price": 0,
+	"urls": {
+		"documentation": "{documentation_url}",
+		"howto": "{howto_video_url}"
+	},
+	"pvt_type": "app"
+}

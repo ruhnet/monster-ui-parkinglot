@@ -1,0 +1,14 @@
+{
+	"parkinglot": {
+		"welcome": "Parking Lot",
+		"description": "See and Retrieve Parked Calls",
+		"refreshButton": "Refresh",
+		"parker": "Parker:",
+		"noParkedCalls": "No Parked Calls",
+		"help": {
+			"title": "Parking Lot - Help",
+			"helptext": "Retrieve a call by clicking the red panel, the slot number, or the caller name/number. Call the person who parked the call by clicking their name or number. The parking lot will auto-refresh every 30 seconds."
+		}
+	}
+
+}

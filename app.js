@@ -66,17 +66,32 @@ define(function (require) {
 
 			//load the parked calls on document ready, and repeat every 15 seconds
 			$(document).ready(function (e) {
-				loadParkingGarage();
-				setInterval(loadParkingGarage, 30000);
+				loadParkingLot();
+				setInterval(loadParkingLot, 30000);
 			});
 
 			//Refresh parked calls button binding event:
 			$template.find("#refresh").on("click", function (e) {
-				loadParkingGarage();
+				loadParkingLot();
+			});
+
+			//Help Button/Dialog
+			$template.find("#help-button").on("click", function (e) {
+				var helptemplate = $(app.getTemplate({
+					name: 'dialog-help'
+				}));
+
+				monster.ui.dialog(helptemplate, {
+					title: app.i18n.active().parkinglot.help.title,
+					width: '600px',
+					onClose: function() {
+				    	//doStuff();
+					}
+				});
 			});
 
 			//function to load the parked calls onto the page and set dependent bindings
-			function loadParkingGarage() {
+			function loadParkingLot() {
 				self.getParkedCalls(function (listOfParkedCalls) {
 					var $results = $(
 						self.getTemplate({
@@ -107,8 +122,47 @@ define(function (require) {
 						self.callTheParker(ringbackId);
 					});
 					///////////////////////////////
-				});
-			} //end function loadParkingGarage();
+				
+					$template.find(".parked-call").on("mouseover", function (e) { //load more details about parker when hover
+							var clickedItem = $(this);
+						if ($(clickedItem).find('.call-parker').html() == '') { //check if the parker info is empty
+							self.callApi({
+							// Get info on the parker device:
+							resource: "device.get",
+							data: {
+								accountId: self.accountId,
+								deviceId: $(this).find('.call-parker').attr('id')
+							},
+							success: function (deviceData) {
+								self.callApi({
+									// Get info on the user the parker device belongs to:
+									resource: "user.get",
+									data: {
+										accountId: self.accountId,
+										userId: deviceData.data.owner_id
+									},
+									success: function (userData) {
+										var parker_name = userData.data.caller_id.internal.name;
+										var parker_number = userData.data.caller_id.internal.number;
+										$(clickedItem).find('.call-parker').html(parker_name+' '+parker_number);
+										$(clickedItem).find('.call-parker_hidden').css('display', 'inline');
+									},
+									error: function (parsedError) {
+										monster.ui.alert("FAILED to get user info for parking slot #" + slot.parking_slot + ": " + parsedError);
+									},
+								}); //end get info on user
+							},
+							error: function (parsedError) {
+								monster.ui.alert(
+									"FAILED to get device info for device: " + slot.ringback_id + ": " + parsedError
+								);
+							},
+						}); //end get info on parker device
+						} //if clickedItem parker info is empty
+					}); //end parked-call mouseover binding
+
+				}); //end self.getParkedCalls
+			} //end function loadParkingLot();
 		}, //bindEvents
 
 		getParkedCalls: function (callback) {
@@ -119,52 +173,10 @@ define(function (require) {
 					accountId: self.accountId,
 				},
 				success: function (data) {
-					var parker_name, parker_number;
 					$.each(data.data.slots, function (index, slot) {
 						slot.parking_slot = index;
-						self.callApi({
-							// Get info on the parker device:
-							resource: "device.get",
-							data: {
-								accountId: self.accountId,
-								deviceId: slot.ringback_id,
-							},
-							success: function (deviceData) {
-								//console.log("Success getting device: "+JSON.stringify(deviceData.data));
-								self.callApi({
-									// Get info on the user the parker device belongs to:
-									resource: "user.get",
-									data: {
-										accountId: self.accountId,
-										userId: deviceData.data.owner_id,
-									},
-									success: function (userData) {
-										slot.parker_name = userData.data.caller_id.internal.name;
-										slot.parker_number = userData.data.caller_id.internal.number;
-										slot.complete = true;
-										console.log(
-											"parker_name first: " + slot.parker_name
-										);
-										//console.log("UserInfo for "+slot.parking_slot+": "+JSON.stringify(userData.data));
-										console.log(
-											"first: " + JSON.stringify(data.data)
-										);
-									},
-									error: function (parsedError) {
-										monster.ui.alert(
-											"FAILED to get user info for parking slot #" + slot.parking_slot + ": " + parsedError
-										);
-									},
-								}); //end get info on user
-							},
-							error: function (parsedError) {
-								monster.ui.alert(
-									"FAILED to get device info for device: " + slot.ringback_id + ": " + parsedError
-								);
-							},
-						}); //end get info on parker device
 					}); //end $.each
-					console.log("later: " + JSON.stringify(data.data));
+					//console.log(JSON.stringify(data.data));
 					callback(data.data);
 				},
 				error: function (parsedError) {

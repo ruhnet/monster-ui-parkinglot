@@ -1,0 +1,124 @@
+div.results-wrapper {
+	/* width: 100%; */
+	display:flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+#help-button {
+	cursor: pointer;
+}
+
+div.parked-call {
+	position: relative;
+  	width: 300px; 
+  	/*height: 60px; */
+  	border: 2px solid #BFBFBF;
+  	background-color: white;
+  	box-shadow: 3px 3px 2px #aaaaaa;
+  	border-radius: 8px;
+  	border: 1px solid grey;
+  	margin: 10px;
+}  
+
+div.parked-call_callinfo {
+	margin-left: auto;
+  	padding: 10px 10px 10px 19px;
+	/* position: absolute; */
+	pointer-events: none;
+}
+
+span.parked-call_caller {
+	font-size: medium;
+	font-weight: bold;
+	color: purple;
+	/* border: 1px solid purple; */
+}
+
+div.parked-call_sidepanel {
+	cursor: pointer;
+	position: absolute;	
+	margin-right: auto;
+	width: 12px;
+	height: 100%;
+	background-color: red;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border-right: 1px solid black;
+	/* pointer-events: auto; */
+	z-index: 0;
+}
+
+div.parked-call_indicator {
+	cursor: pointer;
+	position: absolute;	
+	margin-top: 10px;
+	margin-left: 2px;
+	margin-right: auto;
+	width: 8px;
+	height: 20%;
+	background-color: royalblue;
+	border-radius: 2px;
+	z-index: 0;
+}
+
+div.parked-call_slot {
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: red;
+	color: white;
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	border-top-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	font-size: large;
+	z-index: 0;
+	animation: blinker 4s linear infinite;
+}
+
+.pickup {
+	font-weight: bold;
+	cursor: pointer;
+	pointer-events: auto;
+	z-index: 0;
+}
+
+.call-parker {
+	font-weight: bold;
+	cursor: pointer;
+	pointer-events: auto;
+	z-index: 0;
+}
+
+.call-parker_hidden {
+	display: none;
+}
+
+.parked-call:nth-child(odd) .parked-call_sidepanel {
+	animation: blinker 5s linear infinite;
+}
+
+.parked-call:nth-child(even) .parked-call_sidepanel {
+	animation: blinker 4s linear infinite;
+}
+
+.parked-call:nth-child(3n) .parked-call_sidepanel {
+	animation: blinker 4.5s linear infinite;
+}
+
+
+@keyframes blinker {
+    50% {
+	    opacity: 20%;
+	}
+}
+
+
+
+
+
