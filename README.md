@@ -13,3 +13,5 @@ Clone the repository to your Monster UI apps directory (often /var/www/html/mons
 
 ```sup crossbar_maintenance init_app '/var/www/html/monster-ui/apps/parkinglot' \\ 'http://mycrossbarapi.tld:8000/v2'```
 
+![Parking Lot Main Screen](https://github.com/ruhnet/monster-ui-parkinglot/raw/master/metadata/screenshots/Parkinglot.png)
+
