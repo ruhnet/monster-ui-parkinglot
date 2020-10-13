@@ -64,7 +64,7 @@ define(function (require) {
 			var self = this,
 				$template = args.template;
 
-			//load the parked calls on document ready, and repeat every 15 seconds
+			//load the parked calls on document ready, and repeat every 30 seconds
 			$(document).ready(function (e) {
 				loadParkingLot();
 				setInterval(loadParkingLot, 30000);
@@ -124,7 +124,7 @@ define(function (require) {
 					///////////////////////////////
 				
 					$template.find(".parked-call").on("mouseover", function (e) { //load more details about parker when hover
-							var clickedItem = $(this);
+						var clickedItem = $(this);
 						if ($(clickedItem).find('.call-parker').html() == '') { //check if the parker info is empty
 							self.callApi({
 							// Get info on the parker device:
@@ -153,14 +153,11 @@ define(function (require) {
 								}); //end get info on user
 							},
 							error: function (parsedError) {
-								monster.ui.alert(
-									"FAILED to get device info for device: " + slot.ringback_id + ": " + parsedError
-								);
+								monster.ui.alert("FAILED to get device info: " + slot.ringback_id + ": " + parsedError);
 							},
 						}); //end get info on parker device
 						} //if clickedItem parker info is empty
 					}); //end parked-call mouseover binding
-
 				}); //end self.getParkedCalls
 			} //end function loadParkingLot();
 		}, //bindEvents
@@ -185,7 +182,8 @@ define(function (require) {
 						//if we get a 401 when refreshing parked calls, log out so user can re-auth.
 						monster.util.logoutAndReload();
 					}
-					callback([]);
+					monster.ui.alert("ERROR: Failed to get parked calls list: " + parsedError);
+					callback([]); //Populate results with nothing
 				},
 			}); //end get parked calls list
 		}, //end getParkedCalls
