@@ -4,7 +4,7 @@ define(function (require) {
 		monster = require("monster");
 
 	var app = {
-		name: "switchboard",
+		name: "parkinglot",
 
 		css: ["app"],
 
